@@ -17,3 +17,5 @@ or
 echo (new StripTags('<b>some bold</b><a href="#">link</a>'))->allow(['a'])->strip();
 // prints 'some bold<a href="#">link</a>'
 ```
+### Tip
+> in a moment only use allow() or except() not both
