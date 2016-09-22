@@ -1,0 +1,18 @@
+{
+    "name": "mimrahe/striptags",
+    "description": "PHP strip_tags extension",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "mohsen ranjbar",
+            "email": "mimrahe@gmail.com"
+        }
+    ],
+    "minimum-stability": "v0.1",
+    "require": {}
+    "autoload": {
+        "psr-0": {
+            "Mimrahe": "src/"
+        }
+    }
+}
