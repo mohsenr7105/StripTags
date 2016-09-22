@@ -14,11 +14,13 @@ class StripTags
     public function except(array $notAllowedTags)
     {
         $this->allowedTags = array_diff($this->tags(), $notAllowedTags);
+        return $this;
     }
 
     public function allow(array $allowedTags)
     {
         $this->allowedTags = $allowedTags;
+        return $this;
     }
 
     public function strip()
