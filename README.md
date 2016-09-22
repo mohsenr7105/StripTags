@@ -9,6 +9,11 @@ the __StripTags__ is a solution for me now!
 ```php
 $stripTags = new StripTags('<b>some bold</b><a href="#">link</a>');
 
-$stripedText = $stripTags->except(['b', 'p']);
+$stripedText = $stripTags->except(['b', 'p'])->strip();
 echo $stripedText; // prints 'some bold<a href="#">link</a>'
+```
+or
+```php
+echo (new StripTags('<b>some bold</b><a href="#">link</a>'))->allow(['a'])->strip();
+// prints '<b>some bold</b>link'
 ```
