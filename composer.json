@@ -8,6 +8,7 @@
             "email": "mimrahe@gmail.com"
         }
     ],
+    "minimum-stablity": "dev-master",
     "require": {},
     "autoload": {
         "psr-0": {
