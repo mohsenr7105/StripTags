@@ -1,19 +1,28 @@
 <?php
-namespace App\Utilities;
+namespace Mimrahe;
 
 class StripTags
 {
     protected $text = '';
     protected $allowedTags = '';
 
-    public function __construct($text)
+    public function __construct($text = '')
+    {
+        if(!empty($text)){
+            return $this->text($text);
+        }
+    }
+
+    public function text($text)
     {
         $this->text = $text;
+        return $text;
     }
 
     public function except(array $notAllowedTags)
     {
-        $this->allowedTags = array_diff($this->tags(), $notAllowedTags);
+        $this->allowedTags = $this->tags();
+        $this->allowedTags = array_diff($this->allowedTags, $notAllowedTags);
         return $this;
     }
 
@@ -27,6 +36,8 @@ class StripTags
     {
         $allowedTags = $this->make();
 
+        $this->reset();
+
         return strip_tags($this->text, $allowedTags);
     }
 
@@ -35,6 +46,12 @@ class StripTags
         $tags = implode('><' ,$this->allowedTags);
 
         return '<' . $tags . '>';
+    }
+
+    protected function reset()
+    {
+        $this->allowedTags = '';
+        $this->text = '';
     }
 
     protected function tags()
