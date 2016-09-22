@@ -9,7 +9,7 @@
         }
     ],
     "minimum-stability": "v0.1",
-    "require": {}
+    "require": {},
     "autoload": {
         "psr-0": {
             "Mimrahe": "src/"
