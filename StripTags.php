@@ -11,7 +11,7 @@ class StripTags
         $this->text = $text;
     }
 
-    public function not(array $notAllowedTags)
+    public function except(array $notAllowedTags)
     {
         $this->allowedTags = array_diff($this->tags(), $notAllowedTags);
     }
