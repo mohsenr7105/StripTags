@@ -1,6 +1,9 @@
 {
     "name": "mimrahe/striptags",
-    "description": "PHP strip_tags extension",
+    "description": "PHP strip_tags extended lib",
+    "keywords": [
+        "strip_tags"
+    ],
     "license": "MIT",
     "authors": [
         {
@@ -8,11 +11,14 @@
             "email": "mimrahe@gmail.com"
         }
     ],
-    "minimum-stablity": "dev-master",
+    "minimum-stablity": "dev",
     "require": {},
+    "require-dev": {
+        "phpunit/phpunit": "5.5.5"
+    },
     "autoload": {
-        "psr-0": {
-            "Mimrahe": "src/"
+        "psr-4": {
+            "Mimrahe\\StripTags\\": "src/"
         }
     }
 }
