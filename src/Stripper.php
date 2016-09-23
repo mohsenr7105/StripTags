@@ -1,5 +1,5 @@
 <?php
-namespace Mimrahe\Striptags;
+namespace Mimrahe\StripTags;
 
 class Stripper
 {
@@ -8,7 +8,7 @@ class Stripper
 
     public function __construct($text = '')
     {
-        if(!empty($text)){
+        if (!empty($text)) {
             return $this->text($text);
         }
     }
@@ -34,7 +34,11 @@ class Stripper
             'html',
             'head',
             'meta',
-            'link'
+            'link',
+            'strong',
+            'b',
+            'a',
+            'p'
         ];
     }
 
@@ -55,7 +59,7 @@ class Stripper
 
     protected function make()
     {
-        $tags = implode('><' ,$this->allowedTags);
+        $tags = implode('><', $this->allowedTags);
 
         return '<' . $tags . '>';
     }
@@ -63,6 +67,5 @@ class Stripper
     protected function reset()
     {
         $this->allowedTags = '';
-        $this->text = '';
     }
 }
