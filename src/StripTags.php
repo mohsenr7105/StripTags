@@ -1,7 +1,7 @@
 <?php
-namespace Mimrahe;
+namespace Mimrahe\Striptags;
 
-class StripTags
+class Stripper
 {
     protected $text = '';
     protected $allowedTags = '';
@@ -24,6 +24,18 @@ class StripTags
         $this->allowedTags = $this->tags();
         $this->allowedTags = array_diff($this->allowedTags, $notAllowedTags);
         return $this;
+    }
+
+    protected function tags()
+    {
+        return [
+            'br',
+            'body',
+            'html',
+            'head',
+            'meta',
+            'link'
+        ];
     }
 
     public function allow(array $allowedTags)
@@ -52,17 +64,5 @@ class StripTags
     {
         $this->allowedTags = '';
         $this->text = '';
-    }
-
-    protected function tags()
-    {
-        return [
-            'br',
-            'body',
-            'html',
-            'head',
-            'meta',
-            'link'
-        ];
     }
 }
