@@ -41,5 +41,6 @@ $stripper->text('<a href="#">link</a>'); // defines text for stripping
 $stripper->except(['a']); // same as strip_tags('some tag text', '<a>');
 $stripper->only(['a']); // means strip only <a> tags/elements
 $stripper->strip(); // stripes text
+```
 ### Tip
 > in a moment only use allow() or except() not both
