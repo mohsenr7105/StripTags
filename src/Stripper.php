@@ -1,11 +1,30 @@
 <?php
 namespace Mimrahe\StripTags;
+/**
+ * strip_tags() replacement class
+ *
+ * @package     mimrahe/striptags
+ * @author      mohsen ranjbar <mimrahe@gmail.com>
+ */
 
 class Stripper
 {
+    /**
+     * text to be stripped
+     * @var string
+     */
     protected $text = '';
+
+    /**
+     * allowed tags string
+     * @var string
+     */
     protected $allowedTags = '';
 
+    /**
+     * Stripper constructor.
+     * @param string $text
+     */
     public function __construct($text = '')
     {
         if (!empty($text)) {
@@ -13,12 +32,22 @@ class Stripper
         }
     }
 
+    /**
+     * defines text to be stripped
+     * @param $text
+     * @return $this
+     */
     public function text($text)
     {
         $this->text = $text;
-        return $text;
+        return $this;
     }
 
+    /**
+     * defines not allowed tags
+     * @param array $notAllowedTags
+     * @return $this
+     */
     public function except(array $notAllowedTags)
     {
         $this->allowedTags = $this->tags();
@@ -26,6 +55,43 @@ class Stripper
         return $this;
     }
 
+    /**
+     * defines allowed tags
+     * @param array $allowedTags
+     * @return $this
+     */
+    public function allow(array $allowedTags)
+    {
+        $this->allowedTags = $allowedTags;
+        return $this;
+    }
+
+    /**
+     * stripes $text with $allowedTags
+     * @return string
+     */
+    public function strip()
+    {
+        $allowedTags = $this->make();
+
+        return strip_tags($this->text, $allowedTags);
+    }
+
+    /**
+     * makes strip_tags() allowed tags string
+     * @return string
+     */
+    protected function make()
+    {
+        $tags = implode('><', $this->allowedTags);
+
+        return '<' . $tags . '>';
+    }
+
+    /**
+     * returns html elements/tags list in an array
+     * @return array
+     */
     protected function tags()
     {
         return [
@@ -62,32 +128,5 @@ class Stripper
             // programming
             'script', 'noscript', 'applet', 'embed', 'object', 'param'
         ];
-    }
-
-    public function allow(array $allowedTags)
-    {
-        $this->allowedTags = $allowedTags;
-        return $this;
-    }
-
-    public function strip()
-    {
-        $allowedTags = $this->make();
-
-        $this->reset();
-
-        return strip_tags($this->text, $allowedTags);
-    }
-
-    protected function make()
-    {
-        $tags = implode('><', $this->allowedTags);
-
-        return '<' . $tags . '>';
-    }
-
-    protected function reset()
-    {
-        $this->allowedTags = '';
     }
 }

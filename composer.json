@@ -12,6 +12,7 @@
         }
     ],
     "minimum-stablity": "dev",
+    "prefer-stable": true,
     "require": {},
     "require-dev": {
         "phpunit/phpunit": "5.5.5"
