@@ -7,7 +7,7 @@ the __StripTags__ is a solution for me now!
 
 ## How to install
 ``` bash
-composer require mimrahe/striptags:1.1
+composer require mimrahe/striptags:1.1.0
 ```
 or download release zip package
 
@@ -43,4 +43,4 @@ $stripper->only(['a']); // means strip only <a> tags/elements
 $stripper->strip(); // stripes text
 ```
 ### Tip
-> in a moment only use allow() or except() not both
+> in a moment only use only() or except() not both
