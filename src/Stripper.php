@@ -48,7 +48,7 @@ class Stripper
      * @param array $notAllowedTags
      * @return $this
      */
-    public function except(array $notAllowedTags)
+    public function only(array $notAllowedTags)
     {
         $this->allowedTags = $this->tags();
         $this->allowedTags = array_diff($this->allowedTags, $notAllowedTags);
@@ -60,7 +60,7 @@ class Stripper
      * @param array $allowedTags
      * @return $this
      */
-    public function allow(array $allowedTags)
+    public function except(array $allowedTags)
     {
         $this->allowedTags = $allowedTags;
         return $this;
