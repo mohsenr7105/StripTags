@@ -7,7 +7,7 @@ the __StripTags__ is a solution for me now!
 
 ## How to install
 ``` bash
-composer require mimrahe/striptags:1.1
+composer require mimrahe/striptags:1.1.0
 ```
 or download release zip package
 
@@ -41,5 +41,6 @@ $stripper->text('<a href="#">link</a>'); // defines text for stripping
 $stripper->except(['a']); // same as strip_tags('some tag text', '<a>');
 $stripper->only(['a']); // means strip only <a> tags/elements
 $stripper->strip(); // stripes text
+```
 ### Tip
-> in a moment only use allow() or except() not both
+> in a moment only use only() or except() not both
