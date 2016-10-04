@@ -36,20 +36,28 @@ $textArray = [
 
 foreach($textArray as $text)
 {
-    echo $stripper->text($text)->strip();
+    echo $stripper->on($text)->strip();
 }
 ```
 
 __giving an Array to Stripper__
 ```php
 $stripper = new Stripper();
+$stripper->only(['a', 'ul', 'li']);
+$textArray = [
+    // some texts that will be stripped
+];
+$strippedArray = $stripper->on($textArray)->strip();
+```
+### Tip
+- you can give a nested array to method 'on'
 
 # Methods
 ```php
-$stripper->text('<a href="#">link</a>'); // defines text for stripping
+$stripper->on('<a href="#">link</a>'); // defines text for stripping
 $stripper->except(['a']); // same as strip_tags('some tag text', '<a>');
 $stripper->only(['a']); // means strip only <a> tags/elements
 $stripper->strip(); // stripes text
 ```
 ### Tip
-> in a moment only use only() or except() not both
+- in a moment only use only() or except() not both
