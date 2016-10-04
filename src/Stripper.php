@@ -10,10 +10,10 @@ namespace Mimrahe\StripTags;
 class Stripper
 {
     /**
-     * text to be stripped
-     * @var string
+     * subject to be stripped
+     * @var array|string
      */
-    protected $text = '';
+    protected $subject = '';
 
     /**
      * allowed tags string
@@ -23,23 +23,23 @@ class Stripper
 
     /**
      * Stripper constructor.
-     * @param string $text
+     * @param array|string $subject
      */
-    public function __construct($text = '')
+    public function __construct($subject = '')
     {
-        if (!empty($text)) {
-            return $this->text($text);
+        if (!empty($subject)) {
+            return $this->on($subject);
         }
     }
 
     /**
-     * defines text to be stripped
-     * @param $text
+     * defines subject to be stripped
+     * @param array|string $subject
      * @return $this
      */
-    public function text($text)
+    public function on($subject)
     {
-        $this->text = $text;
+        $this->subject = $subject;
         return $this;
     }
 
@@ -67,14 +67,18 @@ class Stripper
     }
 
     /**
-     * stripes $text with $allowedTags
+     * stripes $subject with $allowedTags
      * @return string
      */
     public function strip()
     {
         $allowedTags = $this->make();
 
-        return strip_tags($this->text, $allowedTags);
+        if(is_array($this->subject)){
+            return $this->stripArray($allowedTags, $this->subject);
+        }
+
+        return strip_tags($this->subject, $allowedTags);
     }
 
     /**
@@ -86,6 +90,24 @@ class Stripper
         $tags = implode('><', $this->allowedTags);
 
         return '<' . $tags . '>';
+    }
+
+    /**
+     * strip array subjects
+     * @param string $allowedTags
+     * @return array
+     */
+    protected function stripArray($allowedTags, $subjectArray)
+    {
+        $stripped = [];
+        foreach ($subjectArray as $subject) {
+            if(is_array($subject)){
+                $stripped[] = $this->stripArray($allowedTags, $subject);
+                continue;
+            }
+            $stripped[] = strip_tags($subject, $allowedTags);
+        }
+        return $stripped;
     }
 
     /**
