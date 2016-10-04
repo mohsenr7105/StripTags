@@ -11,7 +11,7 @@ class Stripper
 {
     /**
      * text to be stripped
-     * @var string
+     * @var array|string
      */
     protected $text = '';
 
@@ -23,7 +23,7 @@ class Stripper
 
     /**
      * Stripper constructor.
-     * @param string $text
+     * @param array|string $text
      */
     public function __construct($text = '')
     {
@@ -34,7 +34,7 @@ class Stripper
 
     /**
      * defines text to be stripped
-     * @param $text
+     * @param array|string $text
      * @return $this
      */
     public function text($text)
@@ -74,6 +74,10 @@ class Stripper
     {
         $allowedTags = $this->make();
 
+        if(is_array($this->text)){
+            return $this->stripArray($allowedTags, $this->text);
+        }
+
         return strip_tags($this->text, $allowedTags);
     }
 
@@ -86,6 +90,24 @@ class Stripper
         $tags = implode('><', $this->allowedTags);
 
         return '<' . $tags . '>';
+    }
+
+    /**
+     * strip array texts
+     * @param string $allowedTags
+     * @return array
+     */
+    protected function stripArray($allowedTags, $textArray)
+    {
+        $stripped = [];
+        foreach ($textArray as $text) {
+            if(is_array($text)){
+                $stripped[] = $this->stripArray($allowedTags, $text);
+                continue;
+            }
+            $stripped[] = strip_tags($text, $allowedTags);
+        }
+        return $stripped;
     }
 
     /**

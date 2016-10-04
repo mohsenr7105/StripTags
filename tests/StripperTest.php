@@ -27,4 +27,30 @@ class StripperTest extends TestCase
         $strippedText = $stripper->strip();
         $this->assertEquals('<strong>strong text</strong>bold text<br><a href="#">link</a>paragraph', $strippedText);
     }
+
+    public function testArrayStrip()
+    {
+        $allowedTags = array(
+            'br', 'strong'
+        );
+
+        $stripper = new Stripper();
+        $textArray = [
+            $this->text,
+            $this->text . '<br><b>here strong</b>',
+            [
+                '<b>bold</b><br>' . $this->text
+            ]
+        ];
+        $strippedArray = $stripper->except($allowedTags)->text($textArray)->strip();
+        $expectedArray = [
+            '<strong>strong text</strong>bold text<br>linkparagraph',
+            '<strong>strong text</strong>bold text<br>linkparagraph<br>here strong',
+            [
+                'bold<br><strong>strong text</strong>bold text<br>linkparagraph'
+            ]
+        ];
+
+        $this->assertEquals($expectedArray, $strippedArray);
+    }
 }

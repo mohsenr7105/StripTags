@@ -40,6 +40,10 @@ foreach($textArray as $text)
 }
 ```
 
+__giving an Array to Stripper__
+```php
+$stripper = new Stripper();
+
 # Methods
 ```php
 $stripper->text('<a href="#">link</a>'); // defines text for stripping
