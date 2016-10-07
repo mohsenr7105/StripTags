@@ -35,9 +35,9 @@ class Stripper
 
     /**
      * allowed tags string
-     * @var string
+     * @var string|array
      */
-    protected $allowedTags = '';
+    protected $allowedTags = array();
 
     /**
      * Stripper constructor.
@@ -140,7 +140,7 @@ class Stripper
     {
         $tags = implode('><', $this->allowedTags);
 
-        return '<' . $tags . '>';
+        return empty($tags) ? $tags : '<' . $tags . '>';
     }
 
     /**

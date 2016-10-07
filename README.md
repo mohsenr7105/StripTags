@@ -92,7 +92,7 @@ $stripped = $stripper->on($textArray)
 # Methods
 __Constructor__: Stripper constructor
 ```php
-new Stripper(array | string $subject);
+new Stripper(array | string $subject = '');
 ```
 parameters:
 - $subject: text or array of texts that strippers works on

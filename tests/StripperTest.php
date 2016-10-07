@@ -6,6 +6,13 @@ class StripperTest extends TestCase
 {
     public $text = '<strong>strong text</strong><b>bold text</b><br><a href="#">link</a><p>paragraph</p>';
 
+    public function testStrip()
+    {
+        $stripper = new Stripper($this->text);
+        $strippedText = $stripper->strip();
+        $this->assertEquals('strong textbold textlinkparagraph', $strippedText);
+    }
+
     public function testOnly()
     {
         $exceptedTags = array(
