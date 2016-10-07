@@ -12,6 +12,11 @@ composer require mimrahe/striptags:1.2.0
 or download release zip package
 
 ## How to use
+__Namespace__
+```php
+\Mimrahe\StripTags\Stripper;
+```
+
 __strip only some tags__
 ```php
 $stripTags = new Stripper('<b>some bold</b><a href="#">link</a>');
