@@ -100,12 +100,12 @@ class Stripper
     protected function stripArray($allowedTags, $subjectArray)
     {
         $stripped = [];
-        foreach ($subjectArray as $subject) {
+        foreach ($subjectArray as $key => $subject) {
             if(is_array($subject)){
-                $stripped[] = $this->stripArray($allowedTags, $subject);
+                $stripped[$key] = $this->stripArray($allowedTags, $subject);
                 continue;
             }
-            $stripped[] = strip_tags($subject, $allowedTags);
+            $stripped[$key] = strip_tags($subject, $allowedTags);
         }
         return $stripped;
     }
