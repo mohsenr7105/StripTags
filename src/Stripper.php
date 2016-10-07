@@ -148,10 +148,32 @@ class Stripper
      * @param string $allowedTags
      * @return array
      */
-    protected function stripArray($allowedTags, $subjectArray)
+    protected function stripArray($allowedTags, array $subject)
     {
+        if(is_callable($this->filter)){
+            $subject = $this->doFilter($subject);
+        }
+
+        if(is_callable($this->before)){
+            array_walk_recursive($subject, $this->before);
+        }
+
+        array_walk_recursive($subject, function(&$value) use ($allowedTags) {
+            $value = strip_tags($value, $allowedTags);
+        });
+
+        if(is_callable($this->after)){
+            array_walk_recursive($subject, $this->after);
+        }
+
+        return $subject;
     }
 
+    /**
+     * does filter on subject
+     * @param array $subject
+     * @return array
+     */
     protected function doFilter(array $subject)
     {
         $filtered = array_filter($subject, $this->filter, ARRAY_FILTER_USE_BOTH);
@@ -159,22 +181,14 @@ class Stripper
         foreach($subject as $key => $value)
         {
             if(is_array($value)){
-                $filtered[$key] = $this->doFilter($value);
+                $result = $this->doFilter($value);
+                if(!empty($result))
+                    $filtered[$key] = $result;
             }
         }
 
         ksort($filtered);
         return $filtered;
-    }
-
-    protected function doBefore()
-    {
-
-    }
-
-    protected function doAfter()
-    {
-
     }
 
     /**

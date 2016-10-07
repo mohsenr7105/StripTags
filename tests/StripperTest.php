@@ -53,4 +53,98 @@ class StripperTest extends TestCase
 
         $this->assertEquals($expectedArray, $strippedArray);
     }
+
+    public function testFilter()
+    {
+        $allowedTags = array(
+            'br', 'strong'
+        );
+
+        $stripper = new Stripper();
+        $textArray = [
+            $this->text,
+            $this->text . '<br><b>here strong</b>',
+            [
+                '<b>bold</b><br>' . $this->text
+            ],
+            ''
+        ];
+        $strippedArray = $stripper->except($allowedTags)
+            ->filter(function($value, $key){
+                return !empty($value);
+            })
+            ->on($textArray)
+            ->strip();
+        $expectedArray = [
+            '<strong>strong text</strong>bold text<br>linkparagraph',
+            '<strong>strong text</strong>bold text<br>linkparagraph<br>here strong',
+            [
+                'bold<br><strong>strong text</strong>bold text<br>linkparagraph'
+            ]
+        ];
+
+        $this->assertEquals($expectedArray, $strippedArray);
+    }
+
+    public function testBefore()
+    {
+        $allowedTags = array(
+            'br', 'strong'
+        );
+
+        $stripper = new Stripper();
+        $textArray = [
+            $this->text,
+            $this->text . '<br><b>here strong</b>',
+            [
+                '<b>bold</b><br>' . $this->text
+            ]
+        ];
+        $strippedArray = $stripper->except($allowedTags)
+            ->before(function(&$value, $key){
+                $value = '<br>' . $value;
+            })
+            ->on($textArray)
+            ->strip();
+        $expectedArray = [
+            '<br><strong>strong text</strong>bold text<br>linkparagraph',
+            '<br><strong>strong text</strong>bold text<br>linkparagraph<br>here strong',
+            [
+                '<br>bold<br><strong>strong text</strong>bold text<br>linkparagraph'
+            ]
+        ];
+
+        $this->assertEquals($expectedArray, $strippedArray);
+    }
+
+    public function testAfter()
+    {
+        $allowedTags = array(
+            'br', 'strong'
+        );
+
+        $stripper = new Stripper();
+        $textArray = [
+            $this->text,
+            $this->text . '<br><b>here strong</b>',
+            [
+                '<b>bold</b><br>' . $this->text
+            ]
+        ];
+        $strippedArray = $stripper->except($allowedTags)
+            ->after(function(&$value, $key){
+                $value = $value . '<br>';
+            })
+            ->on($textArray)
+            ->strip();
+        $expectedArray = [
+            '<strong>strong text</strong>bold text<br>linkparagraph<br>',
+            '<strong>strong text</strong>bold text<br>linkparagraph<br>here strong<br>',
+            [
+                'bold<br><strong>strong text</strong>bold text<br>linkparagraph<br>'
+            ]
+        ];
+
+        $this->assertEquals($expectedArray, $strippedArray);
+    }
 }
