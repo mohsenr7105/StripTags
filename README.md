@@ -96,6 +96,7 @@ new Stripper(array | string $subject);
 ```
 parameters:
 - $subject: text or array of texts that strippers works on
+
 returns: $this
 
 __on__:
@@ -104,6 +105,7 @@ $stripper->on(array | string $subject);
 ```
 parameters:
 - $subject: text or array of texts that stripper works on
+
 returns: $this
 
 __only__: says strip only this tags
@@ -112,6 +114,7 @@ $stripper->only(array $tags);
 ```
 parameters:
 - $tags: array of tags that will be stripped
+
 returns: $this
 
 __except__: says strip all tags except some (same as strip_tags)
@@ -120,6 +123,7 @@ $stripper->except(array $tags);
 ```
 parameters:
 - $tags: array of tags that will not be stripped
+
 returns: $this
 
 ### Tip
@@ -135,6 +139,7 @@ $stripper->filter(callable $filter);
 ```
 parameters:
 - $filter: a closure does filter on array
+
 returns: $this
 
 __before__: specify a callback effects before stripping
@@ -146,6 +151,7 @@ $stripper->before(callable $before);
 ```
 parameters:
 - $before: a closure effects on array items
+
 returns: $this
 
 __after__: specify a callback effects on array items after stripping
@@ -157,6 +163,7 @@ $stripper->after(callable $after);
 ```
 parameters:
 - $after: a closure effects on stripped array
+
 returns: $this
 
 __strip__: strips string or array of strings
