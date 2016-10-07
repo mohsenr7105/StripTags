@@ -13,7 +13,25 @@ class Stripper
      * subject to be stripped
      * @var array|string
      */
-    protected $subject = '';
+    protected $subject;
+
+    /**
+     * function to do on subjects before stripping
+     * @var callable
+     */
+    protected $before;
+
+    /**
+     * function to do on subjects after stripping
+     * @var callable
+     */
+    protected $after;
+
+    /**
+     * function to filter subjects before stripping
+     * @var callable
+     */
+    protected $filter;
 
     /**
      * allowed tags string
@@ -82,6 +100,39 @@ class Stripper
     }
 
     /**
+     * set function to do on subjects before stripping
+     * @param callable $before
+     * @return $this
+     */
+    public function before(callable $before)
+    {
+        $this->before = $before;
+        return $this;
+    }
+
+    /**
+     * set function to do on subjects after stripping
+     * @param callable $after
+     * @return $this
+     */
+    public function after(callable $after)
+    {
+        $this->after = $after;
+        return $this;
+    }
+
+    /**
+     * set function to filter subjects before stripping
+     * @param callable $filter
+     * @return $this
+     */
+    public function filter(callable $filter)
+    {
+        $this->filter = $filter;
+        return $this;
+    }
+
+    /**
      * makes strip_tags() allowed tags string
      * @return string
      */
@@ -99,15 +150,31 @@ class Stripper
      */
     protected function stripArray($allowedTags, $subjectArray)
     {
-        $stripped = [];
-        foreach ($subjectArray as $key => $subject) {
-            if(is_array($subject)){
-                $stripped[$key] = $this->stripArray($allowedTags, $subject);
-                continue;
+    }
+
+    protected function doFilter(array $subject)
+    {
+        $filtered = array_filter($subject, $this->filter, ARRAY_FILTER_USE_BOTH);
+
+        foreach($subject as $key => $value)
+        {
+            if(is_array($value)){
+                $filtered[$key] = $this->doFilter($value);
             }
-            $stripped[$key] = strip_tags($subject, $allowedTags);
         }
-        return $stripped;
+
+        ksort($filtered);
+        return $filtered;
+    }
+
+    protected function doBefore()
+    {
+
+    }
+
+    protected function doAfter()
+    {
+
     }
 
     /**
