@@ -7,7 +7,7 @@ the __StripTags__ is a solution for me now!
 
 ## How to install
 ``` bash
-composer require mimrahe/striptags:1.2.1
+composer require mimrahe/striptags:1.3
 ```
 or download release zip package
 
@@ -57,12 +57,110 @@ $strippedArray = $stripper->on($textArray)->strip();
 ### Tip
 - you can give a nested array to method 'on'
 
-# Methods
+__filter an array and then stripping__
 ```php
-$stripper->on('<a href="#">link</a>'); // defines text for stripping
-$stripper->except(['a']); // same as strip_tags('some tag text', '<a>');
-$stripper->only(['a']); // means strip only <a> tags/elements
-$stripper->strip(); // stripes text
+$stripped = $stripper->on($textArray)
+                     ->filter(function($value, $key){
+                        // some checks
+                        return $bool;
+                     })
+                     ->strip();
 ```
+
+__do something on array before stripping__
+```php
+$stripped = $stripper->on($textArray)
+                     ->before(function(&$value, $key){
+                        // do something on array values
+                        // note that $value must be as a reference
+                        // $key may be a reference
+                     })
+                     ->strip();
+```
+
+__do something on array items after stripping__
+```php
+$stripped = $stripper->on($textArray)
+                     ->after(function(&$value, $key){
+                        // do something on array values
+                        // note that $value must be as a reference
+                        // $key may be a reference
+                     })
+                     ->strip();
+```
+
+# Methods
+__Constructor__: Stripper constructor
+```php
+new Stripper(array | string $subject);
+```
+parameters:
+- $subject: text or array of texts that strippers works on
+returns: $this
+
+__on__:
+```php
+$stripper->on(array | string $subject);
+```
+parameters:
+- $subject: text or array of texts that stripper works on
+returns: $this
+
+__only__: says strip only this tags
+```php
+$stripper->only(array $tags);
+```
+parameters:
+- $tags: array of tags that will be stripped
+returns: $this
+
+__except__: says strip all tags except some (same as strip_tags)
+```php
+$stripper->except(array $tags);
+```
+parameters:
+- $tags: array of tags that will not be stripped
+returns: $this
+
 ### Tip
 - in a moment only use only() or except() not both
+
+__filter__: specify a callback which filters subject array
+```php
+$filter = function($value, $key){
+    // some check on value
+    return $bool;
+}
+$stripper->filter(callable $filter);
+```
+parameters:
+- $filter: a closure does filter on array
+returns: $this
+
+__before__: specify a callback effects before stripping
+```php
+$before = function(&$value, $key){
+    $value = '<br>' . $value;
+}
+$stripper->before(callable $before);
+```
+parameters:
+- $before: a closure effects on array items
+returns: $this
+
+__after__: specify a callback effects on array items after stripping
+```php
+$after = function(&$value, $key){
+    $value = trim($value);
+}
+$stripper->after(callable $after);
+```
+parameters:
+- $after: a closure effects on stripped array
+returns: $this
+
+__strip__: strips string or array of strings
+```php
+$stripper->strip();
+```
+returns: stripped string or array of stripped string
