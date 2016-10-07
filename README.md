@@ -99,7 +99,7 @@ parameters:
 
 returns: $this
 
-__on__:
+__on__: specify string or array of strings stripper works on (same as constructor)
 ```php
 $stripper->on(array | string $subject);
 ```
