@@ -14,7 +14,7 @@ or download release zip package
 ## How to use
 __strip only some tags__
 ```php
-$stripTags = new StripTags('<b>some bold</b><a href="#">link</a>');
+$stripTags = new Stripper('<b>some bold</b><a href="#">link</a>');
 
 $stripedText = $stripTags->only(['b', 'p'])->strip();
 echo $stripedText; // prints 'some bold<a href="#">link</a>'
@@ -22,7 +22,7 @@ echo $stripedText; // prints 'some bold<a href="#">link</a>'
 
 __strip all tags except some tags__
 ```php
-echo (new StripTags('<b>some bold</b><a href="#">link</a>'))->except(['a'])->strip();
+echo (new Stripper('<b>some bold</b><a href="#">link</a>'))->except(['a'])->strip();
 // prints 'some bold<a href="#">link</a>'
 ```
 
