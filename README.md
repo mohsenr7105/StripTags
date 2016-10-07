@@ -7,7 +7,7 @@ the __StripTags__ is a solution for me now!
 
 ## How to install
 ``` bash
-composer require mimrahe/striptags:1.2.0
+composer require mimrahe/striptags:1.2.1
 ```
 or download release zip package
 
